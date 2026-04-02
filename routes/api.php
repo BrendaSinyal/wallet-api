@@ -11,3 +11,7 @@ Route::post('/v1/webhooks/payments', [WebhookController::class, 'handle']);
 Route::get('/test', function () {
     return response()->json(['ok' => true]);
 });
+
+Route::middleware([])->get('/test', function () {
+    return response()->json(['ok' => true]);
+});

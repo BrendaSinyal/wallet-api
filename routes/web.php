@@ -8,5 +8,9 @@ use App\Http\Controllers\PaymentPageController;
 Route::get('/pay/{reference}', [PaymentPageController::class, 'show']);
 Route::post('/pay/{reference}/checkout', [PaymentPageController::class, 'checkout']);
 
+Route::get('/health', function () {
+    return 'web ok';
+});
+
 
 
