@@ -9,7 +9,4 @@ Route::get('/pay/{reference}', [PaymentPageController::class, 'show']);
 Route::post('/pay/{reference}/checkout', [PaymentPageController::class, 'checkout']);
 
 
-Route::get('/api/test', function () {
-    return response()->json(['ok' => true]);
-});
 
