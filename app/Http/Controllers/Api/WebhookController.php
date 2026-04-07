@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
     public function handle(Request $request)
     {
+        Log::info('WEBHOOK IN', [
+            'headers' => $request->headers->all(),
+            'body' => $request->all(),
+        ]);
+
         $signature = $request->header('X-Signature');
         $secret = env('WEBHOOK_SECRET');
 
