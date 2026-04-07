@@ -22,6 +22,12 @@ class WebhookController extends Controller
 
         $computedSignature = hash_hmac('sha256', $request->getContent(), $secret);
 
+        Log::info('SIGNATURE DEBUG', [
+            'raw' => $request->getContent(),
+            'received' => $signature,
+            'computed' => $computedSignature,
+        ]);
+
         if (!$signature || !hash_equals($computedSignature, $signature)) {
             return response()->json([
                 'success' => false,
