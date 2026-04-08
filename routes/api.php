@@ -15,3 +15,19 @@ Route::post('/v1/webhooks/payments', [WebhookController::class, 'handle']);
 Route::get('/test', function () {
     return response()->json(['ok' => true]);
 });
+
+Route::get('/run-migrate', function () {
+    try {
+        \Artisan::call('migrate', ['--force' => true]);
+
+        return response()->json([
+            'success' => true,
+            'output' => \Artisan::output()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+    }
+});
