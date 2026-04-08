@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -50,7 +51,26 @@ class PaymentController extends Controller
 
     public function show(string $reference)
     {
-        $payment = PaymentTransaction::where('payment_reference', $reference)->firstOrFail();
+        Log::info('SHOW PAYMENT DEBUG', [
+            'reference' => $reference,
+            'db_connection' => config('database.default'),
+            'db_database' => config('database.connections.' . config('database.default') . '.database'),
+        ]);
+
+        $payment = PaymentTransaction::where('payment_reference', $reference)->first();
+
+        Log::info('SHOW PAYMENT RESULT', [
+            'found' => $payment ? true : false,
+            'payment_reference' => $payment->payment_reference ?? null,
+        ]);
+
+        if (!$payment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment not found',
+                'reference' => $reference,
+            ], 404);
+        }
 
         return response()->json([
             'success' => true,
