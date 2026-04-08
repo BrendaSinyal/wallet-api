@@ -19,3 +19,21 @@ Route::get('/test', function () {
 Route::middleware([])->get('/test', function () {
     return response()->json(['ok' => true]);
 });
+
+Route::get('/seed-api-key', function () {
+    $plainKey = 'test_api_key_123';
+
+    \App\Models\ApiKey::updateOrCreate(
+        ['name' => 'Default Key'],
+        [
+            'key_prefix' => substr($plainKey, 0, 8),
+            'key_hash' => \Illuminate\Support\Facades\Hash::make($plainKey),
+            'is_active' => true,
+        ]
+    );
+
+    return response()->json([
+        'success' => true,
+        'api_key' => $plainKey
+    ]);
+});
