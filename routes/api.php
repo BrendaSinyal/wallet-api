@@ -32,3 +32,20 @@ Route::get('/run-migrate', function () {
         ]);
     }
 });
+
+Route::get('/clear-config', function () {
+    try {
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+
+        return response()->json([
+            'success' => true,
+            'output' => Artisan::output()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+    }
+});
