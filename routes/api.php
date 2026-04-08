@@ -69,5 +69,5 @@ Route::get('/seed-api-key', function () {
 });
 
 Route::get('/debug-routes', function () {
-    return \Route::getRoutes()->getRoutesByName();
+    return Route::getRoutes()->getRoutesByName();
 });
