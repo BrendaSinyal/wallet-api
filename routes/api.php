@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\WebhookController;
 
@@ -18,11 +19,11 @@ Route::get('/test', function () {
 
 Route::get('/run-migrate', function () {
     try {
-        \Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('migrate', ['--force' => true]);
 
         return response()->json([
             'success' => true,
-            'output' => \Artisan::output()
+            'output' => Artisan::output()
         ]);
     } catch (\Exception $e) {
         return response()->json([
