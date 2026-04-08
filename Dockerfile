@@ -29,6 +29,7 @@ RUN mkdir -p /var/www/html/database \
 
 RUN php artisan config:clear \
     && php artisan route:clear \
+    && php artisan cache:clear \
     && php artisan view:clear
 
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
