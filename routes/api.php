@@ -67,3 +67,7 @@ Route::get('/seed-api-key', function () {
         'api_key' => $plainKey
     ]);
 });
+
+Route::get('/debug-routes', function () {
+    return \Route::getRoutes()->getRoutesByName();
+});
